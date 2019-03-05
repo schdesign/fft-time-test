@@ -108,7 +108,7 @@ public class FftComparator {
             }
         }
 
-        return table(maxPowerOf2, evm, ftTime);
+        return table(maxPowerOf2, fftCycles, evm, ftTime);
     }
 
     /**
@@ -143,11 +143,11 @@ public class FftComparator {
     /**
      * Convert evm and ftTime arrays to text table.
      */
-    private static String table(int maxPowerOf2, double[][][] evm, long[][] ftTime) {
+    private static String table(int maxPowerOf2, int fftCycles, double[][][] evm, long[][] ftTime) {
         String text = "";
 
-        text += String.format("Fourier transform algorithms: fft, rfft and ft   ");
-        text += String.format("EVM: dB   Time: microseconds\n\n");
+        text += String.format("Fourier transform algorithms: fft, rfft and ft.\n\n");
+        text += String.format("FFT cycles: %d   EVM: dB   Time: microseconds\n\n", fftCycles);
         text += String.format("Length   EVM(rfft,fft)    EVM(ft,fft)        ");
         text += String.format("Time(fft)            Time(rfft)       Time(ft)\n");
         text += String.format("         Const    Var    Const    Var    ");
