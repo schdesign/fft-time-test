@@ -7,8 +7,8 @@ import java.io.*;
 public class FftTimeTest {
     /**
      * Compare fourier transform algorithms: fft, rfft and ft.
-     * Fourier transform length start from 4 and increase to pow(2, 12).
-     * Write result to file "FftTime.txt"
+     * Fourier transform length start from 4 and increase to 4096.
+     * Write a result to FftTime.txt file.
      */
     public static void main(String[] args) {
         final String filename = "FftTime.txt";
