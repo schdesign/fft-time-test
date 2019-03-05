@@ -38,6 +38,11 @@ public class Fft {
     public void run(double[] re, double[] im, double[] fftRe, double[] fftIm) {
         int n1, n2, n3;
         int f;
+        double[] re1 = fftRe;
+        double[] im1 = fftIm;
+        double[] re2 = fft2Re;
+        double[] im2 = fft2Im;
+        double[] tmpRef = fftRe;
 
         for (int i = 0; i < length; i++) {
             n1 = i;
@@ -49,8 +54,8 @@ public class Fft {
                 }
                 n1 >>= 1;
             }
-            fftRe[i] = re[n2];
-            fftIm[i] = im[n2];
+            re1[i] = re[n2];
+            im1[i] = im[n2];
         }
 
         for (int i = 0; i < powerOf2; i++) {
@@ -62,15 +67,26 @@ public class Fft {
                     f = n3 * k;
                     int n4 = j + k;
                     int n5 = n1 + n4;
-                    fft2Re[n4] = fftRe[n4] + c[f] * fftRe[n5] + s[f] * fftIm[n5];
-                    fft2Im[n4] = fftIm[n4] - s[f] * fftRe[n5] + c[f] * fftIm[n5];
-                    fft2Re[n5] = fftRe[n4] - c[f] * fftRe[n5] - s[f] * fftIm[n5];
-                    fft2Im[n5] = fftIm[n4] + s[f] * fftRe[n5] - c[f] * fftIm[n5];
+                    re2[n4] = re1[n4] + c[f] * re1[n5] + s[f] * im1[n5];
+                    im2[n4] = im1[n4] - s[f] * re1[n5] + c[f] * im1[n5];
+                    re2[n5] = re1[n4] - c[f] * re1[n5] - s[f] * im1[n5];
+                    im2[n5] = im1[n4] + s[f] * re1[n5] - c[f] * im1[n5];
                 }
             }
-            for (int j = 0; j < length; j++) {
-                fftRe[j] = fft2Re[j];
-                fftIm[j] = fft2Im[j];
+            if (i < powerOf2 - 1) {
+                tmpRef = re1;
+                re1 = re2;
+                re2 = tmpRef;
+                tmpRef = im1;
+                im1 = im2;
+                im2 = tmpRef;
+            }
+        }
+
+        if (fftRe != re2) {
+            for (int i = 0; i < length; i++) {
+                fftRe[i] = re2[i];
+                fftIm[i] = im2[i];
             }
         }
     }
