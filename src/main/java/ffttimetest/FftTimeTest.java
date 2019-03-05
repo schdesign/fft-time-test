@@ -13,7 +13,7 @@ public class FftTimeTest {
     public static void main(String[] args) {
         final String filename = "FftTime.txt";
         final int maxPowerOf2 = 12;
-        final int fftCycles = 10;
+        final int fftCycles = 1000;
         String table = "";
 
         try {
